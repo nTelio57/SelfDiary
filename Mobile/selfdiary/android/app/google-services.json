@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "552366389754",
+    "project_id": "selfdiary-e99a7",
+    "storage_bucket": "selfdiary-e99a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552366389754:android:a715101ce4536d0b118c43",
+        "android_client_info": {
+          "package_name": "com.glowingcactus.selfdiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552366389754-g0omtfh61rm642fqavu0t38riet1pfok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glowingcactus.selfdiary",
+            "certificate_hash": "e62a49882c80b8f0274af409eb6f0beab9b35bfe"
+          }
+        },
+        {
+          "client_id": "552366389754-3gdp3tbjeotln0228thokrn1dsdnj15i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8ld5nri5qmOlRk04TNZ7VUdq-mJJFP-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552366389754-3gdp3tbjeotln0228thokrn1dsdnj15i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "552366389754-p7llbrgmlao5cd0tq489c78rf4j8jotv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.glowingcactus.selfdiary.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
