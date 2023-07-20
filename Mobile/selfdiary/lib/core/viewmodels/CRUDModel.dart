@@ -10,7 +10,6 @@ class CRUDModel extends ChangeNotifier {
 
   List<DayInfo> dayInfos = [];
 
-
   Future<List<DayInfo>> fetchProducts() async {
     var result = await _api.getDataCollection();
     dayInfos = result.docs
@@ -27,7 +26,6 @@ class CRUDModel extends ChangeNotifier {
     var doc = await _api.getDocumentById(id);
     return  DayInfo.fromMap(doc.data() as Map<String, dynamic>, doc.id) ;
   }
-
 
   Future removeProduct(String id) async{
     await _api.removeDocument(id) ;
