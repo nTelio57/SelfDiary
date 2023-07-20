@@ -8,7 +8,7 @@ class Router {
     switch (settings.name) {
       case '/' :
         return  MaterialPageRoute(
-            builder: (_)=> HomeView()
+            builder: (_)=> WelcomeView()
         );
       case '/addProduct' :
         return MaterialPageRoute(

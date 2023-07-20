@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:selfdiary/ui/views/HomeView.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({Key? key}) : super(key: key);
@@ -101,7 +102,7 @@ class _WelcomeViewState extends State<WelcomeView> {
     if (kDebugMode) {
       print('Login clicked');
     }
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginView()));
+
     signInWithGoogle();
   }
 
@@ -134,6 +135,7 @@ class _WelcomeViewState extends State<WelcomeView> {
           print(user.displayName);
           print(emailAddress);
           print(profilePhoto);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView()));
         }
       }
   }

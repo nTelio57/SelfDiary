@@ -42,6 +42,8 @@ dependencies:
   provider: ^6.0.5
   get_it: ^7.6.0
   calendar_timeline: ^1.1.2
+  google_fonts: ^5.1.0
+  collection: ^1.17.1
 
 dev_dependencies:
   flutter_test:

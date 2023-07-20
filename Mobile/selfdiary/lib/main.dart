@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:selfdiary/resources/app_colors.dart';
 import './ui/router.dart' as UIRouter;
@@ -38,9 +39,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primarySwatch: AppColors.primaryPalette,
           primaryColor: AppColors.primaryColor,
-          fontFamily: 'OpenSans',
-          textTheme: const TextTheme(
-          ),
+          textTheme: GoogleFonts.poppinsTextTheme(),
         ),
         initialRoute: '/',
         onGenerateRoute: UIRouter.Router.generateRoute,
