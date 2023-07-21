@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
         onPressed: () {
           Navigator.pushNamed(context, '/addProduct');
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         title: const Text(
@@ -62,26 +62,24 @@ class _HomeViewState extends State<HomeView> {
   {
     final productProvider = Provider.of<CRUDModel>(context);
 
-    return Container(
-      child: StreamBuilder(
-          stream: productProvider.fetchProductsAsStream(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
-              dayInfos = snapshot.data?.docs
-                  .map((doc) => DayInfo.fromMap(doc.data() as Map<String, dynamic>, doc.id))
-                  .toList();
-              return Column(
-                children: [
-                  calendarSlider(),
-                  const SizedBox(height: 20),
-                  selectedDayCard()
-                ],
-              );
-            } else {
-              return Text('fetching');
-            }
-          }),
-    );
+    return StreamBuilder(
+        stream: productProvider.fetchProductsAsStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            dayInfos = snapshot.data?.docs
+                .map((doc) => DayInfo.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+                .toList();
+            return Column(
+              children: [
+                calendarSlider(),
+                const SizedBox(height: 20),
+                selectedDayCard()
+              ],
+            );
+          } else {
+            return Text('fetching');
+          }
+        });
   }
 
   void onDateSelected(DateTime date)
@@ -112,11 +110,11 @@ class _HomeViewState extends State<HomeView> {
   {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (_) => DayInfoDetails(dayInfo: dayInfos![0])));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => DayInfoDetails(dayInfo: selectedDay()!)));
       },
       child: Card(
         elevation: 5,
-        child: Container(
+        child: SizedBox(
           height: 100,
           width: double.infinity,
           child: Padding(
@@ -124,18 +122,24 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  _selectedDate.toStringShort(locale: 'en'),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900
+                Hero(
+                  tag: 'day_date',
+                  child: Text(
+                    _selectedDate.toStringShort(locale: 'en'),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900
+                    ),
                   ),
                 ),
                 const Divider(),
-                Text(
-                  selectedDay() != null ? selectedDay()!.text : 'Not filled yet',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                Hero(
+                  tag: 'day_text',
+                  child: Text(
+                    selectedDay() != null ? selectedDay()!.text : 'Not filled yet',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
                 )
               ],
             ),
