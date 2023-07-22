@@ -100,7 +100,7 @@ class _HomeViewState extends State<HomeView> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.only(left: 16, top: 16),
                   child: Text(
-                    'Day rating:'.toUpperCase(),
+                    'Day rating timeline:'.toUpperCase(),
                     style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700
@@ -216,6 +216,14 @@ class _HomeViewState extends State<HomeView> {
         primaryXAxis: NumericAxis(
           interval: 1
         ),
+        onPlotAreaSwipe: (value){
+          if(value == ChartSwipeDirection.start){
+            _selectedDate = _selectedDate.add(const Duration(days: -1));
+          }
+          if(value == ChartSwipeDirection.end){
+            _selectedDate = _selectedDate.add(const Duration(days: 1));
+          }
+        },
         series: <SplineSeries<DayInfo, int>>[
           SplineSeries(
             splineType: SplineType.monotonic,
@@ -233,7 +241,7 @@ class _HomeViewState extends State<HomeView> {
 
   List<DayInfo> getDataSource() {
     List<DayInfo> result = [];
-    int dataCount = 5;
+    int dataCount = 7;
     int offset = (dataCount / 2).floor();
 
     for(DateTime i = _selectedDate.add(Duration(days: -offset)); i.compareTo(_selectedDate.add(Duration(days: offset+1))) < 0; i = i.add(const Duration(days: 1))){

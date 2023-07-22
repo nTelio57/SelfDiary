@@ -43,31 +43,53 @@ class _WelcomeViewState extends State<WelcomeView> {
   Widget buttonsColumn()
   {
     return Padding(
-      padding: const EdgeInsets.only(left: 32, right: 32, bottom: 175),
+      padding: const EdgeInsets.only(left: 32, right: 32, bottom: 300),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          whiteTextButton('Prisijungti', onLoginClicked),
+          googleSignInButton()
         ],
       ),
     );
   }
 
-  Widget whiteTextButton(String text, Function() handler)
+  Widget googleSignInButton()
   {
-    return SizedBox(
-      width: double.infinity,
-      child: TextButton(
-          onPressed: handler,
-          child: Text(
-              text,
-            style: const TextStyle(
-              fontSize: 18
-            ),
+    return OutlinedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.white),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
           ),
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white
-        )
+        ),
+      ),
+      onPressed: () async {
+        onLoginClicked();
+      },
+      child: const Padding(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(
+              image: AssetImage("assets/google_logo.png"),
+              height: 35.0,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
