@@ -98,7 +98,12 @@ class _HomeViewState extends State<HomeView> {
               ],
             );
           } else {
-            return Text('fetching');
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 8,
+              )
+            );
           }
         });
   }
