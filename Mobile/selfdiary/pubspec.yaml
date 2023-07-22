@@ -45,6 +45,7 @@ dependencies:
   google_fonts: ^5.1.0
   collection: ^1.17.1
   numberpicker: ^2.1.2
+  syncfusion_flutter_charts: ^22.1.39
 
 dev_dependencies:
   flutter_test:

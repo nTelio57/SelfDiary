@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:selfdiary/core/models/dayInfoModel.dart';
 import 'package:selfdiary/dateTimeExtensions.dart';
 import 'package:selfdiary/welcome_view.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../core/viewmodels/CRUDModel.dart';
 import 'DayInfoDetailsView.dart';
@@ -94,7 +95,19 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 calendarSlider(),
                 const SizedBox(height: 20),
-                selectedDayCard()
+                selectedDayCard(),
+                Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.only(left: 16, top: 16),
+                  child: Text(
+                    'Day rating:'.toUpperCase(),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700
+                    ),
+                  ),
+                ),
+                chart()
               ],
             );
           } else {
@@ -173,7 +186,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   const Divider(),
                   Text(
-                    selectedDay()!.id != null ? selectedDay()!.text! : 'Not filled yet',
+                    selectedDay()!.id == null || selectedDay()!.text!.isEmpty ? 'Not filled yet' : selectedDay()!.text!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   )
@@ -184,6 +197,51 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
     );
+  }
+
+  Widget chart()
+  {
+    return Container(
+      margin: const EdgeInsets.only(left: 16.0, right: 16, top: 8),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(16))
+      ),
+      child: SfCartesianChart(
+        margin: const EdgeInsets.only(top: 16, right: 16, left: 8, bottom: 8),
+        primaryYAxis: NumericAxis(
+          maximum: 10,
+          interval: 1
+        ),
+        primaryXAxis: NumericAxis(
+          interval: 1
+        ),
+        series: <SplineSeries<DayInfo, int>>[
+          SplineSeries(
+            splineType: SplineType.monotonic,
+            dataSource: getDataSource(),
+            xValueMapper: (DayInfo dayInfo, _) => dayInfo.date!.day,
+            yValueMapper: (DayInfo dayInfo, _) => dayInfo.dayRating,
+            emptyPointSettings: EmptyPointSettings(
+              mode: EmptyPointMode.zero
+            )
+          )
+        ],
+      ),
+    );
+  }
+
+  List<DayInfo> getDataSource() {
+    List<DayInfo> result = [];
+    int dataCount = 5;
+    int offset = (dataCount / 2).floor();
+
+    for(DateTime i = _selectedDate.add(Duration(days: -offset)); i.compareTo(_selectedDate.add(Duration(days: offset+1))) < 0; i = i.add(const Duration(days: 1))){
+      DayInfo? existingDay = dayInfos!.firstWhereOrNull((element) => element.isDateEqual(i));
+      existingDay ??= DayInfo(null, '', '', i, null);
+      result.add(existingDay);
+    }
+    return result;
   }
 
   Future<void> signOut() async{
