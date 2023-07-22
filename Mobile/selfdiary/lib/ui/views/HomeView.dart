@@ -48,13 +48,13 @@ class _HomeViewState extends State<HomeView> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: selectedDay()!.isDateEqual(DateTime.now()) ? null :  FloatingActionButton(
         onPressed: () {
           setState(() {
             _resetSelectedDate();
           });
         },
-        child: const Icon(Icons.redo),
+        child: const Icon(Icons.redo)
       ),
       appBar: AppBar(
         title: const Text(
