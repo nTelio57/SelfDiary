@@ -22,8 +22,6 @@ class _DayInfoDetailsState extends State<DayInfoDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<CRUDModel>(context);
-
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(

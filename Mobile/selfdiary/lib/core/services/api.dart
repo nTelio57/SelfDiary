@@ -13,7 +13,7 @@ class Api{
     return ref!.get();
   }
   Stream<QuerySnapshot> streamDataCollection() {
-    return ref!.snapshots() ;
+    return ref!.snapshots();
   }
   Future<DocumentSnapshot> getDocumentById(String id) {
     return ref!.doc(id).get();

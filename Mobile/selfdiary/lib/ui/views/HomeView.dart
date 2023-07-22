@@ -1,6 +1,7 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -36,11 +37,10 @@ class _HomeViewState extends State<HomeView> {
         if(dayInfo != null){
           return dayInfo;
         }else{
-          return DayInfo(null, '', _selectedDate, 0);
+          return DayInfo(null, FirebaseAuth.instance.currentUser!.uid, '', _selectedDate, 0);
         }
     }
-    return DayInfo(null, '', _selectedDate, 0);
-    //return dayInfos == null ? null : dayInfos!.firstWhereOrNull((x) => x.isDateEqual(_selectedDate));
+    return DayInfo(null, FirebaseAuth.instance.currentUser!.uid,'', _selectedDate, 0);
   }
 
   @override
@@ -50,9 +50,11 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: Theme.of(context).primaryColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/addProduct');
+          setState(() {
+            _resetSelectedDate();
+          });
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.redo),
       ),
       appBar: AppBar(
         title: const Text(
@@ -77,6 +79,7 @@ class _HomeViewState extends State<HomeView> {
           if (snapshot.hasData) {
             dayInfos = snapshot.data?.docs
                 .map((doc) => DayInfo.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+                .where((element) => element.userId == FirebaseAuth.instance.currentUser!.uid)
                 .toList();
             return Column(
               children: [
