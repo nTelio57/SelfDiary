@@ -28,4 +28,12 @@ class DayInfo{
   {
     return date!.year == dateTime.year && date!.month == dateTime.month && date!.day == dateTime.day;
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is DayInfo
+        && other.text == text
+        && other.dayRating == dayRating;
+  }
+
 }

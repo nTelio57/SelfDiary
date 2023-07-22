@@ -15,10 +15,10 @@ class DayInfoCard extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(builder: (_) => DayInfoDetails(dayInfo: dayInfoDetails)));
       },
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Card(
           elevation: 5,
-          child: Container(
+          child: SizedBox(
             height: MediaQuery
                 .of(context)
                 .size
@@ -36,14 +36,14 @@ class DayInfoCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment:
                     MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
                         dayInfoDetails.text!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 22,
                             fontStyle: FontStyle.italic),

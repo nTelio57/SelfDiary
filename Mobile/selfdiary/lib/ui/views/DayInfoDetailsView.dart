@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:selfdiary/core/models/dayInfoModel.dart';
 import 'package:selfdiary/dateTimeExtensions.dart';
@@ -7,10 +8,10 @@ import '../../core/viewmodels/CRUDModel.dart';
 
 class DayInfoDetails extends StatefulWidget {
   final DayInfo dayInfo;
-  String cachedText = '';
+  DayInfo? cachedDayInfo;
 
   DayInfoDetails({required this.dayInfo}){
-    cachedText = dayInfo.text!;
+    cachedDayInfo = DayInfo(dayInfo.id, dayInfo.userId, dayInfo.text, dayInfo.date, dayInfo.dayRating);
   }
 
   @override
@@ -46,24 +47,61 @@ class _DayInfoDetailsState extends State<DayInfoDetails> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                  initialValue: widget.dayInfo.text,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'I started my day with...'
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                    initialValue: widget.dayInfo.text,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'I started my day with...',
+                    ),
+                    style: const TextStyle(
+                      color: Colors.white
+                    ),
+                    minLines: 20,
+                    maxLines: null,
+                    onSaved: (value) => widget.dayInfo.text = value!,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Day rating:'.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700
+                    ),
                   ),
-                  maxLines: null,
-                  onSaved: (value) => widget.dayInfo.text = value!
-              ),
-            ],
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(8))
+                  ),
+                  child: NumberPicker(
+                    value: widget.dayInfo.dayRating!,
+                    minValue: 0,
+                    maxValue: 10,
+                    axis: Axis.horizontal,
+                    haptics: true,
+                    onChanged: (value) {
+                      setState(() {
+                        widget.dayInfo.dayRating = value;
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
+
       ),
     );
   }
@@ -73,7 +111,7 @@ class _DayInfoDetailsState extends State<DayInfoDetails> {
     final productProvider = Provider.of<CRUDModel>(context, listen: false);
 
     _formKey.currentState!.save();
-    if(widget.cachedText != widget.dayInfo.text){
+    if(widget.cachedDayInfo != widget.dayInfo){
       if(widget.dayInfo.id == null){//Text changed on non existing id - need to add
         print('Text changed - adding');
         await productProvider.addProduct(widget.dayInfo);

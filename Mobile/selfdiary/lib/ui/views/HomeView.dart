@@ -105,7 +105,7 @@ class _HomeViewState extends State<HomeView> {
       showYears: false,
       initialDate: _selectedDate,
       firstDate: DateTime.now().add(const Duration(days: 365 * 5 * -1)),
-      lastDate: DateTime.now().add(const Duration(days: 2)),
+      lastDate: DateTime.now().add(const Duration(days: 1)),
       onDateSelected: (date) => setState(() => onDateSelected(date)),
       leftMargin: MediaQuery.of(context).size.width/2 - 30,
       monthColor: Colors.white70,
@@ -136,15 +136,26 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Hero(
-                    tag: 'day_date',
-                    child: Text(
-                      _selectedDate.toStringShort(locale: 'en'),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900
+                  Row(
+                    children: [
+                      Hero(
+                        tag: 'day_date',
+                        child: Text(
+                          _selectedDate.toStringShort(locale: 'en'),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900
+                          ),
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      Text(
+                        ('${selectedDay()!.dayRating} / 10'),
+                        style: const TextStyle(
+                          fontSize: 14
+                        ),
+                      )
+                    ],
                   ),
                   const Divider(),
                   Text(
