@@ -30,9 +30,9 @@ class DayInfoCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Hero(
-                  tag: dayInfoDetails.id,
+                  tag: dayInfoDetails.id!,
                   child: Text(
-                      dayInfoDetails.id
+                      dayInfoDetails.id!
                   ),
                 ),
                 Padding(
@@ -42,7 +42,7 @@ class DayInfoCard extends StatelessWidget {
                     MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        dayInfoDetails.text,
+                        dayInfoDetails.text!,
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 22,

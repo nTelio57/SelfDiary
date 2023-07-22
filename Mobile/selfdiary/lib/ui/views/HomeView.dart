@@ -31,7 +31,16 @@ class _HomeViewState extends State<HomeView> {
 
   DayInfo? selectedDay()
   {
-    return dayInfos == null ? null : dayInfos!.firstWhereOrNull((x) => x.isDateEqual(_selectedDate));
+    if(dayInfos != null) {
+        var dayInfo = dayInfos!.firstWhereOrNull((x) => x.isDateEqual(_selectedDate));
+        if(dayInfo != null){
+          return dayInfo;
+        }else{
+          return DayInfo(null, '', _selectedDate, 0);
+        }
+    }
+    return DayInfo(null, '', _selectedDate, 0);
+    //return dayInfos == null ? null : dayInfos!.firstWhereOrNull((x) => x.isDateEqual(_selectedDate));
   }
 
   @override
@@ -108,40 +117,40 @@ class _HomeViewState extends State<HomeView> {
 
   Widget selectedDayCard()
   {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (_) => DayInfoDetails(dayInfo: selectedDay()!)));
-      },
-      child: Card(
-        elevation: 5,
-        child: SizedBox(
-          height: 100,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Hero(
-                  tag: 'day_date',
-                  child: Text(
-                    _selectedDate.toStringShort(locale: 'en'),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_) => DayInfoDetails(dayInfo: selectedDay()!)));
+        },
+        child: Card(
+          elevation: 5,
+          child: SizedBox(
+            height: 100,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Hero(
+                    tag: 'day_date',
+                    child: Text(
+                      _selectedDate.toStringShort(locale: 'en'),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900
+                      ),
                     ),
                   ),
-                ),
-                const Divider(),
-                Hero(
-                  tag: 'day_text',
-                  child: Text(
-                    selectedDay() != null ? selectedDay()!.text : 'Not filled yet',
+                  const Divider(),
+                  Text(
+                    selectedDay()!.id != null ? selectedDay()!.text! : 'Not filled yet',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

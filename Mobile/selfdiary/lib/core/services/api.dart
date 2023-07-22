@@ -24,7 +24,7 @@ class Api{
   Future<DocumentReference> addDocument(Map data) {
     return ref!.add(data);
   }
-  Future<void> updateDocument(Map<Object, Object> data , String id) {
+  Future<void> updateDocument(Map<String, Object?> data , String id) {
     return ref!.doc(id).update(data) ;
   }
 
