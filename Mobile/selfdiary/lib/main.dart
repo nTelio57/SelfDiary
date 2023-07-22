@@ -1,22 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:selfdiary/resources/app_colors.dart';
+import 'package:selfdiary/ui/views/HomeView.dart';
+import 'package:selfdiary/welcome_view.dart';
 import './ui/router.dart' as UIRouter;
 import 'core/viewmodels/CRUDModel.dart';
 import 'firebase_options.dart';
 import 'locator.dart';
+
+Widget _initialRoute = const WelcomeView();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //FirebaseAuth.instanceFor(app: app);
-
   setupLocator();
+  await ensureLoggedIn();
   runApp(const MyApp());
+}
+
+Future ensureLoggedIn() async{
+  final user = FirebaseAuth.instance.currentUser;
+  if(user != null)
+  {
+    print(FirebaseAuth.instance.currentUser?.uid);
+    _initialRoute = HomeView();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -42,6 +55,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
         initialRoute: '/',
+        home: _initialRoute,
         onGenerateRoute: UIRouter.Router.generateRoute,
       ),
     );

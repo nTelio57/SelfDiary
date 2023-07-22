@@ -10,14 +10,10 @@ class Router {
         return  MaterialPageRoute(
             builder: (_)=> WelcomeView()
         );
-      case '/addProduct' :
+      case '/home' :
         return MaterialPageRoute(
-            builder: (_)=> WelcomeView()
-        ) ;
-      case '/productDetails' :
-        return MaterialPageRoute(
-            builder: (_)=> WelcomeView()
-        ) ;
+            builder: (_)=> HomeView()
+        );
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

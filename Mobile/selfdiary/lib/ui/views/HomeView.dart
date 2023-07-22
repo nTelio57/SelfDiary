@@ -4,9 +4,11 @@ import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:selfdiary/core/models/dayInfoModel.dart';
 import 'package:selfdiary/dateTimeExtensions.dart';
+import 'package:selfdiary/welcome_view.dart';
 
 import '../../core/viewmodels/CRUDModel.dart';
 import 'DayInfoDetailsView.dart';
@@ -57,6 +59,13 @@ class _HomeViewState extends State<HomeView> {
         child: const Icon(Icons.redo)
       ),
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => signOut(),
+            icon: const Icon(Icons.logout),
+            color: Colors.white,
+          )
+        ],
         title: const Text(
           'SELF DIARY',
           style: TextStyle(
@@ -170,5 +179,10 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
     );
+  }
+
+  Future<void> signOut() async{
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const WelcomeView()), (value) => false);
   }
 }

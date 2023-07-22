@@ -28,7 +28,6 @@ class _WelcomeViewState extends State<WelcomeView> {
     return Stack(
       children: [
         background(),
-        //logo(),
         buttonsColumn()
       ],
     );
@@ -40,30 +39,6 @@ class _WelcomeViewState extends State<WelcomeView> {
       color: Theme.of(context).primaryColor,
     );
   }
-
-  /*Widget logo()
-  {
-    return Container(
-      padding: const EdgeInsets.only(top: 100),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            child: Image.asset('assets/logo/v2.png'),
-            width: 75,
-          ),
-          const Text(
-            'ouser',
-            style: TextStyle(
-              fontSize: 65,
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-        ],
-      ),
-    );
-  }*/
 
   Widget buttonsColumn()
   {
@@ -121,22 +96,7 @@ class _WelcomeViewState extends State<WelcomeView> {
     if(user != null)
       {
         print(FirebaseAuth.instance.currentUser?.uid);
-        for (final providerProfile in user.providerData) {
-          // ID of the provider (google.com, apple.com, etc.)
-          final provider = providerProfile.providerId;
-
-          // UID specific to the provider
-          final uid = providerProfile.uid;
-
-          // Name, email address, and profile photo URL
-          final name = providerProfile.displayName;
-          final emailAddress = providerProfile.email;
-          final profilePhoto = providerProfile.photoURL;
-          print(user.displayName);
-          print(emailAddress);
-          print(profilePhoto);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView()));
-        }
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeView()), (value) => false);
       }
   }
 }
